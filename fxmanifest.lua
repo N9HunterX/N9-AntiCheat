@@ -1,29 +1,28 @@
 fx_version 'cerulean'
 game 'gta5'
 
-author 'ChatGPT'
-description 'n9-anticheat - Advanced Anti-Cheat for QBCore'
+author 'N9DEV'
+description 'n9-anticheat - Advanced Anti Cheat for QBCore'
 version '1.5.0'
 
-shared_script 'config.lua'
-
-client_scripts {
-    'client/main.lua',
-    'client/ui.lua',
+shared_scripts {
+    'config.lua',
+    'locales/en.lua'
 }
 
 server_scripts {
-    '@oxmysql/lib/MySQL.lua',
     'server/database.lua',
-    'server/main.lua',
-    'server/inventory.lua',
-    'server/spawn_monitor.lua',
-    'server/adminpanel.lua',
+    'server/main.lua'
 }
 
+client_scripts {
+    'client/main.lua'
+}
+
+ui_page 'html/index.html'
+
 files {
-    'locales/en.lua',
-    'locales/es.lua',
-    'locales/fr.lua',
-    'locales/vi.lua',
+    'html/index.html',
+    'html/style.css',
+    'html/scripts.js'
 }
