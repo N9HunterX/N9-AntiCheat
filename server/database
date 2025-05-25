@@ -1,0 +1,37 @@
+local bannedPlayers = {}
+
+local function loadBans()
+    local file = LoadResourceFile(GetCurrentResourceName(), "logs/bans.json")
+    if file then
+        bannedPlayers = json.decode(file) or {}
+    else
+        bannedPlayers = {}
+    end
+end
+
+local function saveBans()
+    SaveResourceFile(GetCurrentResourceName(), "logs/bans.json", json.encode(bannedPlayers), -1)
+end
+
+loadBans()
+
+RegisterServerEvent('n9-anticheat:isBanned')
+AddEventHandler('n9-anticheat:isBanned', function(playerId)
+    local src = source
+    local steam = GetPlayerIdentifiers(src)[1]
+    if bannedPlayers[steam] then
+        DropPlayer(src, "You are banned from this server.")
+    end
+end)
+
+function BanPlayer(steam, reason)
+    bannedPlayers[steam] = {reason = reason, date = os.date("%Y-%m-%d %H:%M:%S")}
+    saveBans()
+end
+
+function SendDiscordWebhookMessage(webhook, message)
+    if webhook == nil or webhook == '' then return end
+    PerformHttpRequest(webhook, function(err, text, headers) end, 'POST', json.encode({
+        content = message
+    }), { ['Content-Type'] = 'application/json' })
+end
