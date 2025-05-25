@@ -1,0 +1,16 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(5000)
+        local ped = PlayerPedId()
+        local weapon = GetSelectedPedWeapon(ped)
+        TriggerServerEvent('n9-anticheat:checkWeapon', weapon)
+
+        local veh = GetVehiclePedIsIn(ped, false)
+        if veh ~= 0 then
+            local model = GetEntityModel(veh)
+            TriggerServerEvent('n9-anticheat:checkVehicle', model)
+        end
+    end
+end)
