@@ -1,0 +1,9 @@
+Locales = {
+    ['kick_godmode'] = 'You were kicked for using Godmode.',
+    ['kick_speedhack'] = 'You were kicked for speed hacking.',
+    ['kick_noclip'] = 'You were kicked for noclip/flying.',
+    ['kick_blacklisted_weapon'] = 'You were kicked for using blacklisted weapon.',
+    ['kick_blacklisted_vehicle'] = 'You were kicked for using blacklisted vehicle.',
+    ['kick_entity_spam'] = 'You were kicked for entity spam.',
+    ['kick_suspicious_resource'] = 'You were kicked for running suspicious resource.',
+}
