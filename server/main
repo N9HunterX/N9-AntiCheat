@@ -1,0 +1,31 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+
+AddEventHandler('playerConnecting', function(name, setKickReason, deferrals)
+    local src = source
+    local steam = GetPlayerIdentifiers(src)[1]
+    TriggerEvent('n9-anticheat:isBanned', src)
+end)
+
+-- Check blacklisted weapons usage
+RegisterNetEvent('n9-anticheat:checkWeapon', function(weapon)
+    local src = source
+    for _, blacklistedWeapon in pairs(Config.BlacklistedWeapons) do
+        if weapon == blacklistedWeapon then
+            BanPlayer(GetPlayerIdentifiers(src)[1], "Using blacklisted weapon: "..weapon)
+            DropPlayer(src, Locales['kick_blacklisted_weapon'])
+            SendDiscordWebhookMessage(Config.Webhook, "Player "..GetPlayerName(src).." banned for using blacklisted weapon: "..weapon)
+        end
+    end
+end)
+
+-- Check blacklisted vehicle usage
+RegisterNetEvent('n9-anticheat:checkVehicle', function(vehicleModel)
+    local src = source
+    for _, blacklistedVehicle in pairs(Config.BlacklistedVehicles) do
+        if vehicleModel == blacklistedVehicle then
+            BanPlayer(GetPlayerIdentifiers(src)[1], "Using blacklisted vehicle: "..vehicleModel)
+            DropPlayer(src, Locales['kick_blacklisted_vehicle'])
+            SendDiscordWebhookMessage(Config.Webhook, "Player "..GetPlayerName(src).." banned for using blacklisted vehicle: "..vehicleModel)
+        end
+    end
+end)
